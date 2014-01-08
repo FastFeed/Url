@@ -169,7 +169,7 @@ class Url
         return
             ($this->getScheme() ? $this->getScheme() . '://' : '') .
             ($this->getHost() ? $this->getHost() : '') .
-            ($this->getPort() ? ':' . $this->getgetPort() : '') .
+            ($this->getPort() ? ':' . $this->getPort() : '') .
             ($this->getPath() ? $this->getPath() : '') .
             ($this->getQuery() ? '?' . $this->getQuery() : '') .
             ($this->getFragment() ? '#' . $this->getFragment() : '');

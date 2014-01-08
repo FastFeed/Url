@@ -7,7 +7,7 @@ php:
 
 notifications:
   email:
-    - git@github.com:FastFeed/Url.git
+    - daniel@desarrolla2.com
 
 before_script:
   - curl -s http://getcomposer.org/installer | php
