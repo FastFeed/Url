@@ -149,6 +149,16 @@ class Url
     }
 
     /**
+     * @param array $parameters
+     */
+    public function setParameters(array $parameters)
+    {
+        foreach ($parameters as $parameter => $value) {
+            $this->setParameter($parameter, $value);
+        }
+    }
+
+    /**
      * @return string
      */
     public function getQuery()
