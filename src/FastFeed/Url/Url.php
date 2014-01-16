@@ -149,10 +149,19 @@ class Url
     }
 
     /**
+     *
+     */
+    public function resetParameters()
+    {
+        $this->parameters = array();
+    }
+
+    /**
      * @param array $parameters
      */
     public function setParameters(array $parameters)
     {
+        $this->resetParameters();
         foreach ($parameters as $parameter => $value) {
             $this->setParameter($parameter, $value);
         }
