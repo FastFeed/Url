@@ -78,7 +78,7 @@ class Url
      */
     public function __toString()
     {
-        return $this->getUrl();
+        return $this->toString();
     }
 
     /**
@@ -183,7 +183,7 @@ class Url
     /**
      * @return string
      */
-    public function getUrl()
+    public function toString()
     {
         return
             ($this->getScheme() ? $this->getScheme() . '://' : '') .
