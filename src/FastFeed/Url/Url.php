@@ -183,14 +183,27 @@ class Url
     /**
      * @return string
      */
-    public function toString()
+    public function getFullHost()
     {
         return
             ($this->getScheme() ? $this->getScheme() . '://' : '') .
             ($this->getHost() ? $this->getHost() : '') .
-            ($this->getPort() ? ':' . $this->getPort() : '') .
+            ($this->getPort() ? ':' . $this->getPort() : '');
+    }
+
+    public function getFullPath()
+    {
+        return
             ($this->getPath() ? $this->getPath() : '') .
             ($this->getQuery() ? '?' . $this->getQuery() : '') .
             ($this->getFragment() ? '#' . $this->getFragment() : '');
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        return $this->getFullHost() . $this->getFullPath();
     }
 }
