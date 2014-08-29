@@ -195,7 +195,7 @@ class Url
     {
         return
             ($this->getPath() ? $this->getPath() : '') .
-            ($this->getQuery() ? '?' . $this->getQuery() : '') .
+            ($this->getParameters() ? '?' . $this->getQuery() : '') .
             ($this->getFragment() ? '#' . $this->getFragment() : '');
     }
 
