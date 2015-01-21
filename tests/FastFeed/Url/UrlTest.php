@@ -132,6 +132,7 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     {
         $url = new Url($url);
         $this->assertEquals($expectedParameters, $url->getParameters());
+        $this->assertEquals($url, $url->toString());
     }
 
     /**
@@ -141,6 +142,30 @@ class UrlTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('https://google.com', array()),
+            array('https://google.com?q=yahoo%2finfoseek&v=1', array('q' => 'yahoo/infoseek', 'v' => '1')),
+        );
+    }
+
+    /**
+     * @param $url
+     * @param $key
+     * @param $expectedValue
+     *
+     * @dataProvider dataProviderForTestGetParameter
+     */
+    public function testGetParameter($url, $key, $expectedValue)
+    {
+        $url = new Url($url);
+        $this->assertEquals($expectedValue, $url->getParameter($key));
+    }
+
+    /**
+     * @return array
+     */
+    public function dataProviderForTestGetParameter()
+    {
+        return array(
+            array('https://google.com?q=yahoo%2finfoseek', 'q', 'yahoo/infoseek'),
         );
     }
 
