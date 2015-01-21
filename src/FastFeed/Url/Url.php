@@ -65,11 +65,9 @@ class Url
             }
         }
         if (isset($parsed['query'])) {
-            $items = explode('&', $parsed['query']);
-            foreach ($items as $item) {
-                $value = explode('=', $item);
-                $this->parameters[(string)$value[0]] = (string)$value[1];
-            }
+            parse_str($parsed['query'], $this->parameters);
+        } else {
+            $this->resetParameters();
         }
     }
 
@@ -130,13 +128,18 @@ class Url
     }
 
     /**
-     * @param string $parameter
-     *
+     * @param string      $parameter
+     * @param string|null $defaultValue
      * @return string
      */
-    public function getParameter($parameter)
+    public function getParameter($parameter, $defaultValue = null)
     {
-        return $this->parameters[(string)$parameter];
+        $key = (string)$parameter;
+        if (array_key_exists($key, $this->parameters)) {
+            return $this->parameters[$key];
+        } else {
+            return $defaultValue;
+        }
     }
 
     /**
@@ -172,12 +175,7 @@ class Url
      */
     public function getQuery()
     {
-        $query = '';
-        foreach ($this->parameters as $parameter => $value) {
-            $query .= '&' . $parameter . '=' . $value;
-        }
-
-        return substr($query, 1);
+        return http_build_query($this->parameters);
     }
 
     /**

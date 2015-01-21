@@ -124,6 +124,60 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $url
+     * @param $expectedParameters
+     *
+     * @dataProvider dataProviderForTestGetParameters
+     */
+    public function testGetParameters($url, $expectedParameters)
+    {
+        $url = new Url($url);
+        $this->assertEquals($expectedParameters, $url->getParameters());
+        $this->assertEquals($url, $url->toString());
+    }
+
+    /**
+     * @return array
+     */
+    public function dataProviderForTestGetParameters()
+    {
+        return array(
+            array('https://google.com', array()),
+            array('https://google.com?q=yahoo%2finfoseek&v=1', array('q' => 'yahoo/infoseek', 'v' => '1')),
+        );
+    }
+
+    /**
+     * @param $url
+     * @param $key
+     * @param $defaultValue
+     * @param $expectedValue
+     *
+     * @dataProvider dataProviderForTestGetParameter
+     */
+    public function testGetParameter($url, $key, $defaultValue, $expectedValue)
+    {
+        $url = new Url($url);
+        if ($defaultValue) {
+            $this->assertEquals($expectedValue, $url->getParameter($key, $defaultValue));
+        } else {
+            $this->assertEquals($expectedValue, $url->getParameter($key));
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function dataProviderForTestGetParameter()
+    {
+        return array(
+            array('https://google.com', 'q', null, null),
+            array('https://google.com?r=1', 'q', 's', 's'),
+            array('https://google.com?q=yahoo%2finfoseek', 'q', 's', 'yahoo/infoseek'),
+        );
+    }
+
+    /**
+     * @param $url
      * @param $expectedFragment
      *
      * @dataProvider dataProviderForTestGetFragment
