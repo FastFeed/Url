@@ -128,13 +128,18 @@ class Url
     }
 
     /**
-     * @param string $parameter
-     *
+     * @param string      $parameter
+     * @param string|null $defaultValue
      * @return string
      */
-    public function getParameter($parameter)
+    public function getParameter($parameter, $defaultValue = null)
     {
-        return $this->parameters[(string)$parameter];
+        $key = (string)$parameter;
+        if (array_key_exists($key, $this->parameters)) {
+            return $this->parameters[$key];
+        } else {
+            return $defaultValue;
+        }
     }
 
     /**
