@@ -70,6 +70,8 @@ class Url
                 $value = explode('=', $item);
                 $this->parameters[(string)$value[0]] = (string)$value[1];
             }
+        } else {
+            $this->resetParameters();
         }
     }
 

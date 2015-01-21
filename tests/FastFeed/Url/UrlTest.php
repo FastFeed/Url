@@ -124,6 +124,28 @@ class UrlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $url
+     * @param $expectedParameters
+     *
+     * @dataProvider dataProviderForTestGetParameters
+     */
+    public function testGetParameters($url, $expectedParameters)
+    {
+        $url = new Url($url);
+        $this->assertEquals($expectedParameters, $url->getParameters());
+    }
+
+    /**
+     * @return array
+     */
+    public function dataProviderForTestGetParameters()
+    {
+        return array(
+            array('https://google.com', array()),
+        );
+    }
+
+    /**
+     * @param $url
      * @param $expectedFragment
      *
      * @dataProvider dataProviderForTestGetFragment
