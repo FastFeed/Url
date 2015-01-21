@@ -134,4 +134,31 @@ class UrlTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedFragment, $url->getFragment());
     }
 
+    public function testCurrentUrlOfDefaultPort()
+    {
+        $_SERVER['SERVER_NAME'] = 'www.example.com';
+        $_SERVER['SERVER_PORT'] = 80;
+        $_SERVER['REQUEST_URI'] = '/user/name?id=3&detail=1';
+        $url = new Url();
+        $this->assertEquals('http://www.example.com/user/name?id=3&detail=1', $url->toString());
+    }
+
+    public function testCurrentUrlOfSpecificPort()
+    {
+        $_SERVER['SERVER_NAME'] = 'www.example.com';
+        $_SERVER['SERVER_PORT'] = 8080;
+        $_SERVER['REQUEST_URI'] = '/user/name?id=3&detail=1';
+        $url = new Url();
+        $this->assertEquals('http://www.example.com:8080/user/name?id=3&detail=1', $url->toString());
+    }
+
+    public function testCurrentUrlOfHttps()
+    {
+        $_SERVER['HTTPS'] = 'on';
+        $_SERVER['SERVER_NAME'] = 'www.example.com';
+        $_SERVER['SERVER_PORT'] = 443;
+        $_SERVER['REQUEST_URI'] = '/user/name?id=3&detail=1';
+        $url = new Url();
+        $this->assertEquals('https://www.example.com/user/name?id=3&detail=1', $url->toString());
+    }
 }

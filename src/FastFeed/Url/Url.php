@@ -50,11 +50,15 @@ class Url
      *
      * @param string $url
      */
-    public function __construct($url)
+    public function __construct($url = false)
     {
+        if ($url === false) {
+            $url = $this->getCurrentUrl();
+        }
+
         $parsed = parse_url($url);
         if (!$parsed) {
-            return new \InvalidArgumentException($url . ' is not a valid url');
+            new \InvalidArgumentException($url . ' is not a valid url');
         }
 
         foreach (array('scheme', 'host', 'port', 'path', 'fragment') as $element) {
@@ -205,5 +209,30 @@ class Url
     public function toString()
     {
         return $this->getFullHost() . $this->getFullPath();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentUrl()
+    {
+        $defaultPort = 80;
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+            $url = 'https://';
+            $defaultPort = 443;
+        } else {
+            $url = 'http://';
+        }
+
+        $url .= isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'localhost';
+        if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != $defaultPort) {
+            $url .= ':' . $_SERVER['SERVER_PORT'];
+        }
+
+        if (isset($_SERVER['REQUEST_URI'])) {
+            $url .= $_SERVER['REQUEST_URI'];
+        }
+
+        return $url;
     }
 }
